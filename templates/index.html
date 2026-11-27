@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Dispensa Attiva - Smart Pantry{% endblock %}
+
+{% block content %}
+<!-- FORM DI INSERIMENTO PRODOTTI -->
+<div class="card">
+    <h2>Aggiungi Alimento</h2>
+
+    <div class="scan-box">
+        <button type="button" id="start-scan-btn" class="btn-secondary">📷 Scansiona Codice a Barre / QR</button>
+        <button type="button" id="stop-scan-btn" class="btn-delete is-hidden">⏹️ Chiudi Fotocamera</button>
+        <div id="qr-reader" class="qr-reader-box is-hidden"></div>
+    </div>
+
+<form action="/add" method="POST">
+    <div>
+        <label for="name">Nome Prodotto * </label>
+        <input type="text" id="name" name="name" required placeholder="Es. Latte Intero">
+        <span id="name-error" class="error-message"></span>
+    </div>
+    <div>
+        <label for="expiration_date">Scadenza * </label>
+        <input type="date" id="expiration_date" name="expiration_date" required>
+        <span id="exp-error" class="error-message"></span>
+    </div>
+    <div>
+        <label for="quantity">Quantità (Pezzi) *</label>
+        <input type="number" id="quantity" name="quantity" value="1" min="1" required>
+        <span id="quantity-error" class="error-message"></span>
+    </div>
+    <div>
+        <label for="unit_size">Grammatura / Conf. </label>
+        <input type="text" id="unit_size" name="unit_size" placeholder="Es. 500g, 1.5L, 6x33cl">
+        <span id="unit-error" class="error-message"></span>
+    </div>
+    <div>
+        <label for="barcode-input">Codice a barre (Opt)</label>
+        <input type="text" id="barcode-input" name="barcode" placeholder="Es. 8001234567890">
+        <span id="barcode-error" class="error-message"></span>
+    </div>
+    <div>
+        <button type="submit" id="submit-btn" class="btn-primary">+ Inserisci</button>
+    </div>
+</form>
+</div>
+
+<!-- TABELLA PRODOTTI IN DISPENSA -->
+<div class="card">
+    <h2>Alimenti Attualmente in Dispensa</h2>
+    {% if items %}
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Scadenza</th>
+                <th>Q.tà</th>
+                <th>Grammatura</th>
+                <th>Codice a barre</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td><strong>{{ item['name'] }}</strong></td>
+                <td>
+                    {{ item['expiration_date'] }}
+                    {% if item['expiration_date'] < today_str %}
+                        <span class="badge-expired">(SCADUTO)</span>
+                    {% endif %}
+                </td>
+                <td>{{ item['quantity'] }}</td>
+                <td>{{ item['unit_size'] if item['unit_size'] else '-' }}</td>
+                <td>{{ item['barcode'] if item['barcode'] else '-' }}</td>
+                <td class="actions-cell">
+                    <form action="/update_status/{{ item['id'] }}/consumed" method="POST" class="inline-form">
+                        <button type="submit" class="btn-action btn-consumed">Consumato</button>
+                    </form>
+                    <form action="/delete/{{ item['id'] }}" method="POST" class="inline-form">
+                        <button type="submit" class="btn-action btn-delete">Elimina</button>
+                    </form>
+                    <button type="button"
+                            class="btn-action btn-edit-item "
+                            data-id="{{ item['id'] }}"
+                            data-name="{{ item['name'] }}"
+                            data-quantity="{{ item['quantity'] }}"
+                            data-unit-size="{{ item['unit_size'] or '' }}"
+                            data-expiration-date="{{ item['expiration_date'] }}">
+                        ✏️ Modifica
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>La dispensa è vuota. Aggiungi il primo prodotto tramite il modulo sopra.</p>
+    {% endif %}
+</div>
+
+<div id="edit-modal" class="modal-overlay is-hidden">
+    <div class="modal-card">
+        <h3>✏️ Modifica Prodotto</h3>
+        <form id="edit-item-form">
+            <input type="hidden" id="edit-id">
+
+            <div class="form-group">
+                <label for="edit-name">Nome Prodotto</label>
+                <input type="text" id="edit-name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="edit-quantity">Quantità</label>
+                <input type="number" id="edit-quantity" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="edit-unit-size">Grammatura / Confezione</label>
+                <input type="text" id="edit-unit-size" placeholder="Es. 500g, 1L">
+            </div>
+
+            <div class="form-group">
+                <label for="edit-expiration-date">Data di Scadenza</label>
+                <input type="date" id="edit-expiration-date" required>
+            </div>
+
+            <div class="modal-actions">
+                <button type="submit" id="save-edit-btn">💾 Salva Modifiche</button>
+                <button type="button" id="cancel-edit-btn">Annulla</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

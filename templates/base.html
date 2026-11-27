@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- layout responsive per dispositivi diversi -->
+    <title>{% block title %}Smart Pantry & Anti-Food Waste{% endblock %}</title> <!-- titolo dinamico -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <h1>🥦 Smart Pantry Manager</h1>
+
+    <!-- NAVIGAZIONE GLOBALE UNIFICATA -->
+    <div class="nav-bar">
+        <a href="/" class="nav-link nav-link-back">📋 Dispensa</a>
+        <a href="/stats" class="nav-link nav-link-stats">📊 Statistiche</a>
+        <a href="/recipes" class="nav-link nav-link-recipes">🍳 Ricette</a>
+    </div>
+
+    <!-- BLOCCO CONTENUTO DINAMICO PER LE PAGINE FIGLIE -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Libreria Scanner QR/Barcode -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+
+    <!-- File JavaScript Principale -->
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>

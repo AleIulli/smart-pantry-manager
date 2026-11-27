@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Ricette Anti-Spreco - Smart Pantry{% endblock %}
+
+{% block content %}
+<!-- MODULO GENERAZIONE AUTOMATICA SPOONACULAR -->
+<div class="card">
+    <h2>Generatore Ricette Anti-Spreco</h2>
+    <p>Spoonacular esamina gli alimenti con la data di scadenza più vicina in dispensa e suggerisce le migliori ricette su misura.</p>
+
+    <!-- bottone si generazione ricette -->
+    <button type="button" id="generate-recipe-btn" class="btn-secondary">✨ Trova 5 Ricette Anti-Spreco</button>
+    <div id="recipe-result" style="display: none;"></div>  <!-- mostrato dinamicamente con js, si poteva usare anche classe css -->
+</div>
+
+<!-- FORM INSERIMENTO MANUALE RICETTA -->
+<div class="card" id="manual-recipe-card">
+    <h2>Aggiungi Nuova Ricetta Manuale</h2>
+    <form action="/add_recipe" method="POST" class="recipe-form" id="manual-recipe-form">
+        <div>
+            <label for="title">Titolo Ricetta *</label>
+            <input type="text" id="title" name="title" required placeholder="Es. Frittata Svuota-Frigo">
+        </div>
+        <div>
+            <label for="ingredients">Ingredienti (separati da virgola) *</label>
+            <input type="text" id="ingredients" name="ingredients" required placeholder="Es. Uova, Formaggio, Zucchine">
+        </div>
+        <div>
+            <label for="instructions">Istruzioni di Preparazione *</label>
+            <textarea id="instructions" name="instructions" required rows="5" placeholder="Descrivi i passaggi..."></textarea>
+        </div>
+        <div>
+            <button type="submit">Salva Ricetta</button>
+        </div>
+    </form>
+</div>
+
+<!-- ARCHIVIO RICETTI SALVATE -->
+<div class="card">
+    <h2>Ricette In Archivio</h2>
+    {% if recipes %}
+        <div class="recipe-grid">
+            {% for recipe in recipes %}
+            <div class="recipe-card">
+                <h3 class="recipe-title">{{ recipe['title'] }}</h3>
+                <p class="recipe-section-label"><strong>Ingredienti:</strong></p>
+                <p class="recipe-ingredients">{{ recipe['ingredients'] }}</p>
+                <p class="recipe-section-label"><strong>Preparazione:</strong></p>
+                <p class="recipe-instructions">{{ recipe['instructions'] }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Nessuna ricetta presente in archivio.</p>
+    {% endif %}
+</div>
+{% endblock %}

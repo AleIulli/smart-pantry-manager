@@ -1,0 +1,429 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 30px;
+    background-color: #f4f7f6;
+    color: #333;
+}
+
+h1, h2 {
+    color: #2c3e50;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 25px;
+}
+
+form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    align-items: end;
+}
+
+label {
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-bottom: 3px;
+    display: block;
+}
+
+/* ==========================================
+   ETICHETTE FORM (LABEL) STILIZZATE
+   ========================================== */
+.card form label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 800;            /* Grassetto marcato */
+    text-transform: uppercase;   /* Testo in maiuscolo */
+    letter-spacing: 0.8px;       /* Spaziatura elegante tra le lettere */
+    color: #1e3d59;              /* Blu scuro coordinato con la tabella */
+    margin-bottom: 6px;
+}
+
+.card form input:required {
+    background-color: #f4f7f9; /* Grigio/azzurrino molto chiaro e discreto */
+    border-left: 3px solid #1e3d59; /* Bordo sinistro blu coordinato con le etichette */
+}
+
+/* Cambio colore quando l'utente ci clicca sopra (Focus) */
+.card form input:required:focus {
+    background-color: #ffffff;
+    border-color: #1e3d59;
+}
+
+input, select, button, textarea {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #219150;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: white;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #34495e;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.btn-action {
+    display: inline-block;
+    padding: 5px 8px;
+    font-size: 0.8em;
+    margin-right: 3px;
+    width: auto;
+}
+
+.btn-consumed {
+    background-color: #2980b9;
+}
+
+.btn-delete {
+    background-color: #c0392b;
+}
+
+.actions-cell {
+    display: flex;
+    gap: 5px;
+}
+
+.actions-cell > * {
+    flex: 1;
+    margin: 0;
+}
+
+.actions-cell .btn-action {
+    width: 100%;
+    margin-right: 0;
+    text-align: center;
+}
+
+.badge-expired {
+    color: #e74c3c;
+    font-weight: bold;
+    margin-left: 5px;
+}
+/*finestra a compoarsa*/
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-overlay.is-hidden {
+    display: none;
+}
+
+.modal-card {
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 420px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+/* ==========================================
+   STILI VALIDAZIONE IN TEMPO REALE
+   ========================================== */
+.error-message {
+    color: #e74c3c;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-top: 4px;
+    display: block;
+    min-height: 18px; /* Evita salti di layout */
+}
+
+input.input-invalid {
+    border-color: #e74c3c !important;
+    background-color: #fdf2f2 !important;
+}
+
+input.input-valid {
+    border-color: #2ecc71 !important;
+}
+
+
+/* NAVIGAZIONE E LINK */
+.nav-bar {
+    margin-bottom: 20px;
+}
+
+.nav-link {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-link-back {
+    color: #27ae60;
+}
+
+.nav-link-stats {
+    color: #2980b9;
+}
+
+/* CLASSI PER LE STATISTICHE */
+.stat-consumed {
+    color: #2980b9;
+    font-weight: bold;
+}
+
+.stat-wasted {
+    color: #c0392b;
+    font-weight: bold;
+}
+
+.rate-good {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.rate-warning {
+    color: #e67e22;
+    font-weight: bold;
+}
+
+/* SCHEDE RICETTE */
+/*----------------*/
+
+.recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.recipe-card {
+    border: 1px solid #e0e0e0;
+    border-left: 5px solid #8e44ad;
+    border-radius: 6px;
+    padding: 15px;
+    background-color: #fafafa;
+}
+
+.recipe-title {
+    margin-top: 0;
+    color: #8e44ad;
+}
+
+.recipe-section-label {
+    margin-bottom: 3px;
+    font-size: 0.9em;
+}
+
+.recipe-ingredients {
+    margin-top: 0;
+    color: #555;
+    font-style: italic;
+}
+
+.recipe-instructions {
+    margin-top: 0;
+    color: #444;
+    white-space: pre-line;
+}
+
+/* ==========================================
+   SEZIONE SCANNER BARCODE & UI
+   ========================================== */
+.scan-box {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Rimosso display: none da qui! */
+.qr-reader-box {
+    width: 100%;
+    max-width: 500px;
+    margin: 15px auto;
+    border: 2px dashed #3498db;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.is-hidden {
+    display: none !important;
+}
+
+.input-highlight {
+    background-color: #e8f8f5 !important;
+    transition: background-color 0.3s ease;
+}
+
+/* ==========================================
+   SEZIONE GRAFICO STATISTICHE
+   ========================================== */
+.chart-card {
+    margin-bottom: 25px;
+}
+
+.stats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.stats-header h2 {
+    margin: 0;
+}
+
+.year-filter {
+    display: flex;
+    align-items: center;
+}
+
+.year-filter label {
+    font-weight: 800;
+    margin-right: 10px;
+    color: #1e3d59;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.year-select {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    font-weight: 700;
+    color: #1e3d59;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.year-select:focus {
+    outline: none;
+    border-color: #1e3d59;
+}
+
+.chart-container {
+    position: relative;
+    height: 350px;
+    width: 100%;
+}
+
+/* ==========================================
+   LISTA 5 RICETTE GENERATE (Accordion Layout)
+   ========================================== */
+.results-title {
+    margin-bottom: 15px;
+    color: #1e3d59;
+}
+
+.recipe-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.recipe-card-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.recipe-header {
+    padding: 12px 16px;
+    background-color: #f8fafc;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.recipe-header:hover {
+    background-color: #e2e8f0;
+}
+
+.recipe-badge {
+    font-size: 0.82rem;
+    font-weight: bold;
+    color: #27ae60;
+    background-color: #e8f8f5;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.recipe-details {
+    padding: 15px 16px;
+    border-top: 1px solid #e2e8f0;
+    background-color: #ffffff;
+}
+
+.recipe-instructions-text {
+    white-space: pre-line;
+    color: #475569;
+    margin-bottom: 15px;
+}
+
+.btn-import-recipe {
+    background-color: #1e3d59;
+    color: #ffffff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-import-recipe:hover {
+    background-color: #173046;
+}
+
+/* Evidenziamento temporaneo del form al momento dell'importazione */
+.highlight-form {
+    animation: highlightPulse 1.5s ease;
+}
+
+@keyframes highlightPulse {
+    0% { box-shadow: 0 0 0 0 rgba(30, 61, 89, 0.5); }
+    50% { box-shadow: 0 0 0 8px rgba(30, 61, 89, 0.2); }
+    100% { box-shadow: 0 0 0 0 rgba(30, 61, 89, 0); }
+}

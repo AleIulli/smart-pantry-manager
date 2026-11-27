@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Statistiche - Smart Pantry{% endblock %}
+
+{% block content %}
+<!-- Card Grafico Istogramma -->
+<div class="card chart-card">
+    <div class="stats-header">
+        <h2>📊 Grafico Consumi vs Sprechi</h2>
+
+        <div class="year-filter">
+            <label for="year-select">Seleziona Anno:</label>
+            <select id="year-select" class="year-select"> </select>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="yearlyStatsChart"></canvas> <!-- "spazio da disegno" HTML5 -->
+    </div>
+</div>
+
+<!-- Card Tabella Storico -->
+<div class="card">
+    <h2>Storico Consumi vs Sprechi</h2>
+    {% if stats %}
+    <!-- Aggiunto id="stats-table" -->
+    <table id="stats-table">
+        <thead>
+            <tr>
+                <th>Anno / Mese</th>
+                <th>Prodotti Consumati</th>
+                <th>Prodotti Sprecati</th>
+                <th>Totale Gestito</th>
+                <th>Tasso di Consumo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in stats %}
+            {% set total = row['total_consumed'] + row['total_wasted'] %}
+            {% set pct_consumed = ((row['total_consumed'] / total) * 100)|round(1) if total > 0 else 0 %}
+
+            <!-- Aggiunti gli attributi data-* a <tr> per la lettura automatica da JS -->
+            <tr data-year="{{ row['year'] }}"
+                data-month="{{ row['month'] }}"
+                data-consumed="{{ row['total_consumed'] }}"
+                data-wasted="{{ row['total_wasted'] }}">
+
+                <td><strong>{{ row['year'] }} / {{ "%02d"|format(row['month']) }}</strong></td>
+                <td class="stat-consumed">{{ row['total_consumed'] }}</td>
+                <td class="stat-wasted">{{ row['total_wasted'] }}</td>
+                <td>{{ total }}</td>
+                <td>
+                    <strong class="{% if pct_consumed >= 70 %}rate-good{% else %}rate-warning{% endif %}">
+                        {{ pct_consumed }}%
+                    </strong>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>Nessun dato storico ancora archiviato. Le statistiche compariranno automaticamente al termine del ciclo di vita dei prodotti.</p>
+    {% endif %}
+</div>
+
+<!-- Libreria Grafici -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
