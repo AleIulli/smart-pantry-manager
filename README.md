@@ -39,7 +39,7 @@ L'applicazione adotta un'architettura **Client–Server ibrida**, combinando il 
 ### Procedura di avvio in locale
 1. **Clonare il repository:**
    ```bash
-   git clone [https://github.com/](https://github.com/)<TUO-USERNAME>/smart-pantry-manager.git
+   git clone https://github.com/AleIulli/smart-pantry-manager.git
    cd smart-pantry-manager
    
 ---
